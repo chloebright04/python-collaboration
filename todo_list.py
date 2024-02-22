@@ -22,7 +22,9 @@ def main(): #the main function
     a to add a task
     d to delete a task
     v to view your tasks
-    c to mark a task as complete:\n
+    c to mark a task as complete
+    gc to get a list of completed tasks
+    gi to get a list of incomplete tasks:\n
                        """) #asks user what they would like to do with their to-do list, giving them the characters to enter for each available action 
             if choice == 'a': #calls addTask on the dictionary of tasks if user enters a and displays the updated dictionary 
                 addTask(myTasks)
@@ -35,6 +37,10 @@ def main(): #the main function
             elif choice == 'c':
                 markComplete(myTasks)
                 print("Here is your updated to-do list: ", viewTasks(myTasks))
+            elif choice == 'gc':
+                print("Here is your list of completed tasks: ", getComplete(myTasks))
+            elif choice == 'gi':
+                print("Here is your list of incomplete tasks: ", getIncomplete(myTasks))
             cont = input("Would you like to continue? Enter y for yes, n for no:   ") #asks user to enter whether they would like to continue or quit 
     print("Thank you for using your to-do list. Here is your final list of tasks: \n", viewTasks(myTasks)) #prints final to-do list once while loop ends 
     
@@ -60,6 +66,23 @@ def markComplete(tasks): # takes in a dictionary as its argument
     tempdic = {completeTask:"complete"} #creates temp dictionary with the user entered task with 'complete' as its value, rather than 'incomplete'
     tasks.update(tempdic) #updates the dictionary from the argument
     return tasks #returns the updated dict 
-    
+
+def getComplete(tasks): # takes in a dictionary as its argument 
+    completedTasks = [] #initializes an empty list 
+    values = list(tasks.values()) #takes values of dictionary and stores them in list form 
+    keys = list(tasks.keys()) #takes the keys of the dictionary and stores them in list form 
+    for i in range(len(values)): #for loop that iterates through the length of the lists
+        if values[i] == "complete": #if the value is complete
+            completedTasks.append(keys[i]) #appends the key at the same index to the list of completed items 
+    return completedTasks #returns the completed list 
+
+def getIncomplete(tasks): #takes in a dictionary as its argument
+    incompleteTasks = [] #initializes an empty list to hold incomplete tasks
+    values = list(tasks.values()) #gets values of the dict and stores them in a list
+    keys = list(tasks.keys()) #gets keys of the dict and stores them in a list 
+    for i in range(len(values)): #for loop that iterates through the length of the lists 
+        if values[i] == "incomplete": #if the value at an index is incomplete
+            incompleteTasks.append(keys[i]) #appends the key at the same index to the list of incomplete tasks
+    return incompleteTasks #returns the list of incomplete tasks
 
 main() #calls the main fucntion 
